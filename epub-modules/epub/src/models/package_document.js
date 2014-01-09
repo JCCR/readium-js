@@ -6,6 +6,7 @@ define(['require', 'module', 'jquery', 'underscore', 'backbone', 'URIjs', './man
     // Description: This model provides an interface for navigating an EPUB's package document
     var PackageDocument = function(packageDocumentURL, jsonData, resourceFetcher) {
 
+        var self = this;
         var _spine = new Spine(jsonData.spine);
         var _manifest = new Manifest(jsonData.manifest);
         var _metadata = new Metadata(jsonData.metadata);
@@ -293,14 +294,14 @@ define(['require', 'module', 'jquery', 'underscore', 'backbone', 'URIjs', './man
 
         function getTocText(callback) {
             var packageDocumentAbsoluteURL = new URI(packageDocumentURL).absoluteTo(document.URL);
-            var tocDocumentAbsoluteURL = new URI(getToc()).absoluteTo(packageDocumentAbsoluteURL);
+            var tocDocumentAbsoluteURL = new URI(self.getToc()).absoluteTo(packageDocumentAbsoluteURL);
 
             console.log('tocUrl: [' + tocDocumentAbsoluteURL + ']');
 
             resourceFetcher.relativeToPackageFetchFileContents(tocDocumentAbsoluteURL, 'text', function (tocDocumentText) {
                 callback(tocDocumentText)
             }, function (err) {
-                console.error('ERROR fetching TOC from [' + getToc() + ']:');
+                console.error('ERROR fetching TOC from [' + self.getToc() + ']:');
                 console.error(err);
                 callback(undefined);
             });
@@ -327,7 +328,7 @@ define(['require', 'module', 'jquery', 'underscore', 'backbone', 'URIjs', './man
                         callback($ncxOrderedList[0]);
                     } else {
                         var packageDocumentAbsoluteURL = new URI(packageDocumentURL).absoluteTo(document.URL);
-                        var tocDocumentAbsoluteURL = new URI(getToc()).absoluteTo(packageDocumentAbsoluteURL);
+                        var tocDocumentAbsoluteURL = new URI(self.getToc()).absoluteTo(packageDocumentAbsoluteURL);
                         // add a BASE tag to change the TOC document's baseURI.
                         var oldBaseTag = $(tocDom).remove('base');
                         var newBaseTag = $('<base></base>');
@@ -340,7 +341,7 @@ define(['require', 'module', 'jquery', 'underscore', 'backbone', 'URIjs', './man
                     callback(undefined);
                 }
             });
-        }
+        };
 
         // 
         this.getEpub3Toc = function(callback) {
