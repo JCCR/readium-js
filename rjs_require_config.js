@@ -28,6 +28,7 @@ var requirejs = {
         epubCfi: 'epub-modules/epub-renderer/src/readium-shared-js/lib/epub_cfi',
         cfiNavigationLogic: 'epub-modules/epub-renderer/src/readium-shared-js/js/views/cfi_navigation_logic',
         reflowableView: 'epub-modules/epub-renderer/src/readium-shared-js/js/views/reflowable_view',
+        scrollView: 'epub-modules/epub-renderer/src/readium-shared-js/js/views/scroll_view',
         onePageView: 'epub-modules/epub-renderer/src/readium-shared-js/js/views/one_page_view',
         fixedView: 'epub-modules/epub-renderer/src/readium-shared-js/js/views/fixed_view',
         readerView: 'epub-modules/epub-renderer/src/readium-shared-js/js/views/reader_view',
@@ -199,6 +200,11 @@ var requirejs = {
             exports: 'reflowableView'
         },
 
+        scrollView: {
+            deps: ['readiumSDK', 'cfiNavigationLogic', 'bookmarkData'],
+            export: 'scrollView'
+        },
+
         fixedView: {
             deps: ['readiumSDK', 'onePageView', 'currentPagesInfo', 'fixedPageSpread', 'bookmarkData'],
             exports: 'fixedView'
@@ -222,7 +228,7 @@ var requirejs = {
         readerView : {
             deps: [ 'backbone','readiumSDK', 'helpers', 'viewerSettings', 'styleCollection', 'package',
                 'mediaOverlayPlayer', 'pageOpenRequest', 'fixedView', 'reflowableView', 'mediaOvelayDataInjector',
-                'internalLinksSupport', 'iframeLoader', 'annotationsManager'],
+                'internalLinksSupport', 'iframeLoader', 'annotationsManager', 'scrollView'],
             exports:'readerView'
         },
 
